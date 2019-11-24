@@ -1,6 +1,7 @@
-h1 toop-project-2019
+toop-project-2019
 =====================
-h2 instruction
+instruction
+-----------------------------------
 - fork project on Github
 
 clone fork to local
