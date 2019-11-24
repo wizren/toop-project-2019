@@ -1,3 +1,6 @@
+h1 toop-project-2019
+=====================
+h2 instruction
 - fork project on Github
 
 clone fork to local
@@ -11,10 +14,10 @@ add upstream
 create branch from master for work
 - git checkout -b ветка
 
-добавить все
+add all
 - git add .
 
-коммит
+commit
 - git commit -m "название коммита в кавычках"
 
 push changes in your fork
