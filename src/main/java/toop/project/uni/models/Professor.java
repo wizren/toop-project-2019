@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 public class Professor extends Person {
-    Department department;
     Set<Subject> subjects;
     List<Publication> scientificPublications;
     int role;
-    public Professor(String name, String surname, Date birthDate, int role) {
-        super(name, surname, birthDate);
+    public Professor(String name, String surname, String patronymic, Date birthDate, int role) {
+        super(name, surname, patronymic, birthDate);
+        this.role = role;
     }
 }

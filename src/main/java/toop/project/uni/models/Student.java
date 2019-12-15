@@ -6,15 +6,14 @@ import java.util.List;
 public class Student extends Person {
     List<Publication> scientificPublications;
 
-
     public Student(String name,
                    String surname,
+                   String patronymic,
                    Date birthDate,
                    Institute institute,
                    Department department,
                    Specialty specialty,
                    Group group) {
-        super(name, surname, birthDate);
-
+        super(name, surname, patronymic, birthDate);
     }
 }
