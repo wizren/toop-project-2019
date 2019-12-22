@@ -5,15 +5,13 @@ import java.util.List;
 
 public class Student extends Person {
     List<Publication> scientificPublications;
+    GradeBook gradeBook;
 
     public Student(String name,
                    String surname,
                    String patronymic,
-                   Date birthDate,
-                   Institute institute,
-                   Department department,
-                   Specialty specialty,
-                   Group group) {
+                   Date birthDate) {
         super(name, surname, patronymic, birthDate);
+        gradeBook = new GradeBook();
     }
 }

@@ -17,4 +17,16 @@ public class GradeBook {
         }
         this.book.put(number, semester);
     }
+
+    void putMark(int semester, Subject subject, byte mark) {
+        Map<Subject, Mark> page = book.get(semester);
+        if (page == null) {
+            return;
+        }
+        Mark m = page.get(subject);
+        if (m == null) {
+            return;
+        }
+        m.setMark(mark);
+    }
 }

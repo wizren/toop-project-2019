@@ -15,10 +15,6 @@ public class Laboratory extends UniStructure {
         return this.professorList;
     }
 
-    public void addProfessor(Professor professor) {
-        this.professorList.add(professor);
-    }
-
     public Professor[] findProfessor(String phrase) {
         String[] phrases = phrase.split(" ");
         return professorList.stream().filter(professor -> {
@@ -31,10 +27,5 @@ public class Laboratory extends UniStructure {
             }
             return false;
         }).toArray(Professor[]::new);
-    }
-
-    public String removeProfessor(Professor professor) {
-        professorList.remove(professor);
-        return professor.toString();
     }
 }

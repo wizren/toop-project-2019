@@ -3,24 +3,30 @@ package toop.project.uni.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Specialty {
-    private int code;
-    List<Group> groups;
-    private Department department;
-    Degree degree;
+public class Specialty extends UniStructure {
+    private List<Group> groupList;
+    private Degree degree;
 
-    public Specialty(int code,
-                     Degree degree,
-                     Department department) {
-        this.groups = new ArrayList<Group>();
-        this.code = degree.ordinal() * 10 + code;
+    public Specialty(int code, String name, Degree degree) {
+        super(name, code);
+        this.groupList = new ArrayList();
+        this.degree = degree;
     }
 
-    public Department getDepartment() {
-        return department;
+    public Degree getDegree() {
+        return this.degree;
     }
 
-    public int getCode() {
-        return code;
+    public List<Group> getGroupList() {
+        return this.groupList;
+    }
+
+    public Group getGroup(int code) {
+        for (int i = 0; i < groupList.size(); i++) {
+            if (groupList.get(i).getNumber() == code) {
+                return groupList.get(code);
+            }
+        }
+        return null;
     }
 }

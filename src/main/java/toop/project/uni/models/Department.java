@@ -20,14 +20,6 @@ public class Department extends UniStructure {
         return this.specialtyList;
     }
 
-    public void addLaboratory(Laboratory laboratory) {
-        this.laboratoryList.add(laboratory);
-    }
-
-    public void addSpecialty(Specialty specialty) {
-        this.specialtyList.add(specialty);
-    }
-
     public Laboratory getLaboratory(int code) {
         for (int i = 0; i < laboratoryList.size(); i++) {
             if (laboratoryList.get(i).getCode() == code) {
@@ -42,24 +34,6 @@ public class Department extends UniStructure {
             if (specialtyList.get(i).getCode() == code) {
                 return specialtyList.get(code);
             }
-        }
-        return null;
-    }
-
-    public String removeLaboratory(int code) {
-        Laboratory laboratory = getLaboratory(code);
-        if (laboratory != null) {
-            laboratoryList.remove(laboratory);
-            return laboratory.toString();
-        }
-        return null;
-    }
-
-    public String removeSpecialty(int code) {
-        Specialty specialty = getSpecialty(code);
-        if (specialty != null) {
-            specialtyList.remove(specialty);
-            return specialty.toString();
         }
         return null;
     }

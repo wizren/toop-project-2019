@@ -15,19 +15,6 @@ public class Institute extends UniStructure {
         return departmentList;
     }
 
-    public void addDepartment(Department department) {
-        departmentList.add(department);
-    }
-
-    public String removeDepartment(int code) {
-        Department department = getDepartment(code);
-        if (department != null) {
-            departmentList.remove(department);
-            return department.toString();
-        }
-        return null;
-    }
-
     public Department getDepartment(int code) {
         for (int i = 0; i < departmentList.size(); i++) {
             if (departmentList.get(i).getCode() == code) {
