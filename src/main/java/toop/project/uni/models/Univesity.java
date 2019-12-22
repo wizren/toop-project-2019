@@ -23,4 +23,5 @@ public class Univesity extends UniStructure {
         }
         return null;
     }
+
 }
