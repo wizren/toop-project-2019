@@ -2,9 +2,11 @@ package toop.project.uni.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Specialty extends UniStructure {
     private List<Group> groupList;
+    private List<Person> personList;
     private Degree degree;
 
     public Specialty(int code, String name, Degree degree) {
@@ -28,5 +30,20 @@ public class Specialty extends UniStructure {
             }
         }
         return null;
+    }
+
+    public List<Person> getPersonList() {
+        if (personList != null && !personList.isEmpty()) {
+            return personList;
+        }
+        List<Person> people = new ArrayList<>();
+        for (Group group : groupList) {
+            people.addAll(group.getStudents().stream().map(student -> {
+                student.structDescription = String.format("специальность: %s, %s", toString(), student.structDescription);
+                return student;
+            }).collect(Collectors.toList()));
+        }
+        personList = people;
+        return personList;
     }
 }

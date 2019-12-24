@@ -1,11 +1,14 @@
 package toop.project.uni.models;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Department extends UniStructure {
     private List<Specialty> specialtyList;
     private List<Laboratory> laboratoryList;
+    private List<Person> personList;
 
     public Department(int code, String name) {
         super(name, code);
@@ -36,5 +39,26 @@ public class Department extends UniStructure {
             }
         }
         return null;
+    }
+
+    public List<Person> getPersonList() {
+        if (personList != null && !personList.isEmpty()) {
+            return personList;
+        }
+        List<Person> people = new ArrayList<>();
+        for (Laboratory laboratory : laboratoryList) {
+            people.addAll(laboratory.getProfessorList().stream().map(professor -> {
+                professor.structDescription = String.format("кафедра: %s, %s", toString(), professor.structDescription);
+                return professor;
+            }).collect(Collectors.toList()));
+        }
+        for (Specialty specialty : specialtyList) {
+            people.addAll(specialty.getPersonList().stream().map(person -> {
+                person.structDescription = String.format("кафедра: %s, %s", toString(), person.structDescription);
+                return person;
+            }).collect(Collectors.toList()));
+        }
+        personList = people;
+        return personList;
     }
 }

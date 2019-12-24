@@ -1,6 +1,6 @@
 package toop.project.uni.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Student extends Person {
@@ -10,8 +10,9 @@ public class Student extends Person {
     public Student(String name,
                    String surname,
                    String patronymic,
-                   Date birthDate) {
-        super(name, surname, patronymic, birthDate);
+                   LocalDate birthDate,
+                   IndexingDelegate delegate) {
+        super(name, surname, patronymic, birthDate, delegate);
         gradeBook = new GradeBook();
     }
 }

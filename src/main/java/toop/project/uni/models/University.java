@@ -1,10 +1,12 @@
 package toop.project.uni.models;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class University extends UniStructure {
+public class University extends UniStructure implements IndexingDelegate {
     private List<Institute> instituteList;
+    private List<Person> personList;
 
     public University(String name) {
         super(name, 0);
@@ -22,5 +24,17 @@ public class University extends UniStructure {
             }
         }
         return null;
+    }
+
+    public List<Person> getPersonList(boolean forceUpdate) {
+        if (personList != null && !personList.isEmpty() && !forceUpdate) {
+            return personList;
+        }
+        List<Person> people = new ArrayList<>();
+        for (Institute institute : instituteList) {
+            people.addAll(institute.getPersonList());
+        }
+        personList = people;
+        return personList;
     }
 }

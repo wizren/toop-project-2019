@@ -1,6 +1,7 @@
 package toop.project.uni.models;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Group {
     private List<Subject> subjects;
@@ -36,6 +37,9 @@ public class Group {
     }
 
     public List<Student> getStudents() {
-        return students;
+        return students.stream().map(student -> {
+            student.structDescription = String.format("группа: %s", getFullNumber());
+            return student;
+        }).collect(Collectors.toList());
     }
 }

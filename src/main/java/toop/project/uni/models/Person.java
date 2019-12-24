@@ -2,27 +2,58 @@ package toop.project.uni.models;
 
 //Базовый класс для людей
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Person {
-    public String name;
-    public String surname;
-    public String patronymic;
-    private Date birthDate;
+    private String name;
+    private String surname;
+    private String patronymic;
+    private LocalDate birthDate;
+    String structDescription;
+    private IndexingDelegate delegate;
 
-    public Person(String name, String surname, String patronymic, Date birthDate) {
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
+    public Person(String name, String surname, String patronymic, LocalDate birthDate, IndexingDelegate delegate) {
+        this.setName(name);
+        this.setSurname(surname);
+        this.setPatronymic(patronymic);
         this.birthDate = birthDate;
+        this.delegate = delegate;
+        delegate.getPersonList(true);
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
     @Override
     public String toString() {
-        return surname + " " + name + " " + patronymic;
+        return getSurname() + " " + getName() + " " + getPatronymic();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+        delegate.getPersonList(true);
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+        delegate.getPersonList(true);
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+        delegate.getPersonList(true);
     }
 }
