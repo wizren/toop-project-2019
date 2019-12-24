@@ -11,5 +11,4 @@ public class Publication {
         tutorial,
         book
     }
-
 }

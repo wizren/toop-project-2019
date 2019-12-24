@@ -3,10 +3,10 @@ package toop.project.uni.models;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Univesity extends UniStructure {
+public class University extends UniStructure {
     private List<Institute> instituteList;
 
-    public Univesity(String name) {
+    public University(String name) {
         super(name, 0);
         this.instituteList = new LinkedList();
     }
