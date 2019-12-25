@@ -57,4 +57,8 @@ public class Person implements Serializable {
         this.patronymic = patronymic;
         delegate.getPersonList(true);
     }
+
+    public void callDelegate() {
+        delegate.getPersonList(true);
+    }
 }

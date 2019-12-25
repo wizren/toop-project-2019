@@ -8,4 +8,14 @@ public class Subject implements Serializable {
     public Subject(String name) {
         this.name = name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return name.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

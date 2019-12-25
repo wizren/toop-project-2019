@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Student extends Person implements Serializable {
-    List<Publication> scientificPublications;
-    GradeBook gradeBook;
+    private List<Publication> scientificPublications;
+    private GradeBook gradeBook;
 
     public Student(String name,
                    String surname,
@@ -15,5 +15,13 @@ public class Student extends Person implements Serializable {
                    IndexingDelegate delegate) {
         super(name, surname, patronymic, birthDate, delegate);
         gradeBook = new GradeBook();
+    }
+
+    public GradeBook getGradeBook() {
+        return gradeBook;
+    }
+
+    public List<Publication> getScientificPublications() {
+        return scientificPublications;
     }
 }

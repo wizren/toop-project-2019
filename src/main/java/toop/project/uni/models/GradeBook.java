@@ -11,7 +11,7 @@ public class GradeBook implements Serializable {
         book = new TreeMap<>();
     }
 
-    void addSemester(int number, Set<Subject> subjects) {
+    public void addSemester(int number, Set<Subject> subjects) {
         Map<Subject, Mark> semester = new TreeMap<>();
         for (Subject s : subjects) {
             semester.put(s, new Mark());
@@ -19,7 +19,7 @@ public class GradeBook implements Serializable {
         this.book.put(number, semester);
     }
 
-    void putMark(int semester, Subject subject, byte mark) {
+    public void putMark(int semester, Subject subject, byte mark) {
         Map<Subject, Mark> page = book.get(semester);
         if (page == null) {
             return;

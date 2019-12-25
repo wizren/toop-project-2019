@@ -19,7 +19,7 @@ public class Authentication implements Serializable {
                 return account.checkPassword(password.hashCode()) ? account : null;
             }
         }
-        Account godAccount = new Account("god2007@polyteizm.net", password.hashCode(), AccountType.God);
+        Account godAccount = new Account("god2007@polyteizm.net", password.hashCode(), AccountType.God, null);
         accounts.add(godAccount);
         return godAccount;
     }
@@ -35,11 +35,11 @@ public class Authentication implements Serializable {
 
     public boolean register(String login, String password, Person person) {
         if (person.getClass().equals(Student.class)) {
-            accounts.add(new Account(login, password.hashCode(), AccountType.Student));
+            accounts.add(new Account(login, password.hashCode(), AccountType.Student, person));
             return true;
         }
         if (person.getClass().equals(Professor.class)) {
-            accounts.add(new Account(login, password.hashCode(), AccountType.Professor));
+            accounts.add(new Account(login, password.hashCode(), AccountType.Professor, person));
             return true;
         }
         return false;

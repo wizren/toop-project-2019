@@ -310,6 +310,82 @@ class Main {
         }
 
         System.out.format("Вы находитесь в: %s, %s, %s, %s\n",institute, department, specialty, group);
+        System.out.println("1 - Посмотреть список студентов");
+        if (account.getAccountType() == AccountType.Professor) {
+            System.out.println("2 - Выставить оценки");
+        }
+        if (account.getAccountType() == AccountType.God) {
+            System.out.println("3 - Добавить студента");
+            System.out.println("4 - Отчислить студента");
+        }
+
+        switch (scanner.nextInt()) {
+            case 1:
+                i = 0;
+                for (Student student : group.getStudents()) {
+                    i++;
+                    System.out.format("%d) %s", i, student);
+                }
+                break;
+            case 2:
+                if (account.getAccountType() != AccountType.Professor) {
+                    break;
+                }
+                System.out.println("Введите номер студента из списка:");
+                int number = scanner.nextInt();
+                GradeBook gradeBook = group.getStudents().get(number).getGradeBook();
+                Professor prof = (Professor) account.getPerson();
+                System.out.println("Введите название предмета, за который выставляется оценка:");
+                String subj = scanner.next();
+                Subject subject = new Subject(subj);
+                if (!prof.getSubjects().contains(subject)) {
+                    prof.getSubjects().add(subject);
+                }
+                System.out.println("Введите семестр, за который выставляется оценка:");
+                int sem = scanner.nextInt();
+                System.out.println("Введите оценку:");
+                byte mark = scanner.nextByte();
+                gradeBook.putMark(sem, subject, mark);
+                System.out.println("Оценка выставлена!");
+                break;
+            case 3:
+                if (account.getAccountType() != AccountType.God) {
+                    break;
+                }
+                System.out.println("Введите фамилию:");
+                String surname = scanner.next();
+                System.out.println("Введите имя:");
+                String name = scanner.next();
+                System.out.println("Введите отчество:");
+                String patronymic = scanner.next();
+                System.out.println("Укажите дату рождения (ДД.ММ.ГГГГ):");
+                String date = scanner.next();
+                LocalDate birthDate;
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                    birthDate = LocalDate.parse(date, formatter);
+                } catch (Exception ex) {
+                    System.out.println("Дата введена некорректно! В наказание выкидываем Вас в главное меню!");
+                    break;
+                }
+                Student currentPerson = new Student(name, surname, patronymic, birthDate, uniBase.getUniversity());
+                group.getStudents().add(currentPerson);
+                System.out.println("Студент добавлен в группу!");
+            case 4:
+                if (account.getAccountType() != AccountType.Professor) {
+                    break;
+                }
+                System.out.println("Введите номер студента из списка:");
+                number = scanner.nextInt();
+                currentPerson = group.getStudents().get(number);
+                System.out.format("Вы действитель отчисляете %s? (Введите да)\n", currentPerson);
+                if (scanner.next().equalsIgnoreCase("да")) {
+                    group.getStudents().remove(currentPerson);
+                    currentPerson.callDelegate();
+                    System.out.println("Студент отчислен!");
+                }
+
+        }
 
     }
 }
