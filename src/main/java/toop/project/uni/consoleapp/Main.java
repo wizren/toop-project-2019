@@ -9,7 +9,6 @@ import toop.project.uni.services.UniBase;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.Scanner;
 
 class Main {
@@ -20,7 +19,9 @@ class Main {
 
     public static void main(String[] args) {
         prepare();
-        mainMenu();
+        do {
+            System.out.format("Добро пожаловать в Университет %s!\n", uniBase.getUniversity().toString());
+        } while (mainMenu());
     }
 
     private static void prepare() {
@@ -29,26 +30,24 @@ class Main {
         scanner = new Scanner(System.in);
     }
 
-    private static void mainMenu() {
-        System.out.format("Добро пожаловать в Университет %s!\n", uniBase.getUniversity().toString());
+    private static boolean mainMenu() {
         System.out.println("1 - авторизация");
         System.out.println("2 - регистрация");
         System.out.println("0 - выход");
         switch (scanner.nextInt()) {
             case 0:
-                return;
+                return false;
             case 1:
                 authorization();
-                return;
+                return true;
             case 2:
                 registration();
-                return;
+                return true;
             case 2128506:
-
-                return;
+                getGodMod();
+                return true;
             default:
-                mainMenu();
-                return;
+                return true;
         }
     }
 
@@ -66,6 +65,20 @@ class Main {
             mainMenu();
         }
         System.out.format("Вы вошли как %s\n", account.getLogin());
+        switch (account.getAccountType()) {
+            case God:
+                godMode();
+                return;
+            case Student:
+                studentMode();
+                return;
+            case Professor:
+                professorMode();
+                return;
+            default:
+                System.out.println("Произошла неопознанная ошибка!");
+                return;
+        }
     }
 
     private static void registration() {
@@ -78,8 +91,15 @@ class Main {
         String patronymic = scanner.next();
         System.out.println("Укажите дату рождения (ДД.ММ.ГГГГ):");
         String date = scanner.next();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate birthDate = LocalDate.parse(date, formatter);
+        LocalDate birthDate;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            birthDate = LocalDate.parse(date, formatter);
+        } catch (Exception ex) {
+            System.out.println("Дата введена некорректно! В наказание выкидываем Вас в главное меню!");
+            mainMenu();
+            return;
+        }
         Person currentPerson;
         Person[] foundPeople = uniBase.getUniversity()
                 .getPersonList(false)
@@ -129,8 +149,41 @@ class Main {
         scanner.reset();
         System.out.println("Введите логин:");
         String login = scanner.next();
-        System.out.println("Введите пароль:");
-        //String onePassword =
+        System.out.println("Придумайте пароль:");
+        String onePassword = scanner.next();
+        System.out.println("Повторите пароль:");
+        String secondPassword = scanner.next();
+        while (!onePassword.equals(secondPassword)) {
+            System.out.println("Введенные пароли не совпадают!");
+            System.out.println("Придумайте пароль:");
+            onePassword = scanner.next();
+            System.out.println("Повторите пароль:");
+            secondPassword = scanner.next();
+        }
+        System.out.println(uniBase.getAuthentication().register(login, onePassword, currentPerson)
+                ? "Поздравляем, регистрация успешно завершена!"
+                : "Что-то пошло не так. Повторите попытку позже");
     }
 
+    private static void getGodMod() {
+        System.out.println("Введите пароль!!!");
+        String password = scanner.next();
+        account = uniBase.getAuthentication().getGodAccount(password);
+        if (account == null) {
+            System.out.println("Вы не БОГ!!!");
+            return;
+        }
+    }
+
+    private static void studentMode() {
+
+    }
+
+    private static void professorMode() {
+
+    }
+
+    private static void godMode() {
+
+    }
 }
