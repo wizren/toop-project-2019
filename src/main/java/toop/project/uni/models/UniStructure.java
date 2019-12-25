@@ -1,6 +1,8 @@
 package toop.project.uni.models;
 
-public class UniStructure {
+import java.io.Serializable;
+
+public class UniStructure implements Serializable {
     //Базовый класс для структурных подразделений университета
 
     private int code;

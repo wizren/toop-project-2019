@@ -1,6 +1,8 @@
 package toop.project.uni.models;
 
-public class Mark {
+import java.io.Serializable;
+
+public class Mark implements Serializable {
     public static final String empty = "Не выставлена";
     public static final String two = "Неудовлетворительно";
     public static final String three = "Удовлетворительно";

@@ -1,6 +1,8 @@
 package toop.project.uni.models;
 
-public class Publication {
+import java.io.Serializable;
+
+public class Publication implements Serializable {
     String name;
     PublicationType type;
     int year;
@@ -11,5 +13,4 @@ public class Publication {
         tutorial,
         book
     }
-
 }
