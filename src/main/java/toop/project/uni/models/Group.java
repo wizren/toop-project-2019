@@ -1,13 +1,13 @@
 package toop.project.uni.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Group implements Serializable {
     private List<Subject> subjects;
     private List<Student> students;
-    private Specialty specialty;
     private Student headman;
     private int grade;
     private int number;
@@ -15,19 +15,13 @@ public class Group implements Serializable {
     public Group(int number, int grade) {
         this.grade = grade;
         this.number = number;
+        this.students = new ArrayList<>();
+        this.subjects = new ArrayList<>();
     }
 
     @Override
     public String toString() {
-        return getFullNumber();
-    }
-
-    public String getFullNumber() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(specialty.getCode());
-        sb.append('/');
-        sb.append(number);
-        return sb.toString();
+        return String.format("%d", getNumber());
     }
 
     public int getNumber() {
@@ -44,7 +38,7 @@ public class Group implements Serializable {
 
     public List<Student> getStudents() {
         return students.stream().map(student -> {
-            student.structDescription = String.format("группа: %s", getFullNumber());
+            student.structDescription = String.format("группа: %s", toString());
             return student;
         }).collect(Collectors.toList());
     }

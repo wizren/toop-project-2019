@@ -37,7 +37,6 @@ public class Person implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-        delegate.getPersonList(true);
     }
 
     public String getSurname() {
@@ -46,7 +45,6 @@ public class Person implements Serializable {
 
     public void setSurname(String surname) {
         this.surname = surname;
-        delegate.getPersonList(true);
     }
 
     public String getPatronymic() {
@@ -55,7 +53,6 @@ public class Person implements Serializable {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
-        delegate.getPersonList(true);
     }
 
     public void callDelegate() {

@@ -19,9 +19,9 @@ class Main {
     public static void main(String[] args) {
         prepare();
         do {
+            serializer.serializeData(uniBase);
             System.out.format("Добро пожаловать в Университет %s!\n", uniBase.getUniversity().toString());
         } while (mainMenu());
-        serializer.serializeData(uniBase);
     }
 
     private static void prepare() {
@@ -105,9 +105,9 @@ class Main {
                 .getPersonList(false)
                 .stream()
                 .filter(person -> {
-                    return person.getName().equals(name)
-                            && person.getSurname().equals(surname)
-                            && person.getPatronymic().equals(patronymic)
+                    return person.getName().equalsIgnoreCase(name)
+                            && person.getSurname().equalsIgnoreCase(surname)
+                            && person.getPatronymic().equalsIgnoreCase(patronymic)
                             && person.getBirthDate().isEqual(birthDate);
                 }).toArray(Person[]::new);
         switch (foundPeople.length) {
@@ -173,6 +173,7 @@ class Main {
             System.out.println("Вы не БОГ!!!");
             return;
         }
+        godMode();
     }
 
     private static void studentMode() {
@@ -194,11 +195,12 @@ class Main {
         System.out.println("5 - Уничтожить весь университет");
         switch (scanner.nextInt()) {
             case 1:
-
+                manageGroup();
+                break;
         }
     }
 
-    private static void manageGroup(Account account) {
+    private static void manageGroup() {
         int i = 0;
         System.out.println("Укажите институт:");
         for (Institute institute : uniBase.getUniversity().getInstituteList()) {
@@ -258,13 +260,15 @@ class Main {
         Specialty specialty;
         if (num == i) {
             System.out.println("Введите название направления:");
-            String name = scanner.next();
+            scanner.nextLine();
+            String name = scanner.nextLine();
             System.out.println("Введите код направления:");
-            int code = scanner.nextInt();
+            int code = Integer.parseInt(scanner.next());
             System.out.println("Степень: 0 - бакалавриат, 1 - магистратура, 2 - аспирантура " +
                     "(берем остаток от введенного Вами числа :) )");
             Degree degree;
-            switch (scanner.nextInt() % 3) {
+            int deg = scanner.nextInt();
+            switch (deg % 3) {
                 case 0:
                     degree = Degree.Bachelor;
                     break;
@@ -318,7 +322,6 @@ class Main {
             System.out.println("3 - Добавить студента");
             System.out.println("4 - Отчислить студента");
         }
-
         switch (scanner.nextInt()) {
             case 1:
                 i = 0;
@@ -372,7 +375,7 @@ class Main {
                 group.getStudents().add(currentPerson);
                 System.out.println("Студент добавлен в группу!");
             case 4:
-                if (account.getAccountType() != AccountType.Professor) {
+                if (account.getAccountType() != AccountType.God) {
                     break;
                 }
                 System.out.println("Введите номер студента из списка:");
@@ -383,7 +386,10 @@ class Main {
                     group.getStudents().remove(currentPerson);
                     currentPerson.callDelegate();
                     System.out.println("Студент отчислен!");
+                } else {
+                    System.out.println("Студент спасен.");
                 }
+                break;
 
         }
 
