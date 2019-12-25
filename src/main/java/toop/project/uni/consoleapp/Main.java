@@ -3,11 +3,13 @@ package toop.project.uni.consoleapp;
 //Точка входа в консольное приложение
 
 import toop.project.uni.models.Account;
+import toop.project.uni.models.Person;
 import toop.project.uni.services.Serializer;
 import toop.project.uni.services.UniBase;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Scanner;
 
 class Main {
@@ -28,7 +30,7 @@ class Main {
     }
 
     private static void mainMenu() {
-        System.out.format("Добро пожаловать в Университет %s!", uniBase.getUniversity().toString());
+        System.out.format("Добро пожаловать в Университет %s!\n", uniBase.getUniversity().toString());
         System.out.println("1 - авторизация");
         System.out.println("2 - регистрация");
         System.out.println("0 - выход");
@@ -51,6 +53,7 @@ class Main {
     }
 
     private static void authorization() {
+        scanner.reset();
         String login, password;
         System.out.println("Авторизация");
         System.out.println("Введите логин:");
@@ -59,15 +62,10 @@ class Main {
         password = scanner.next();
         account = uniBase.getAuthentication().login(login, password);
         if (account == null) {
-            System.out.println("Неверный логин/пароль. Повторите попытку. (Для выхода введите exit)");
-            if (scanner.next().equals("exit")) {
-                mainMenu();
-                return;
-            }
-            authorization();
-            return;
+            System.out.println("Неверный логин/пароль. Повторите попытку");
+            mainMenu();
         }
-        System.out.format("Вы вошли как %s", account.getLogin());
+        System.out.format("Вы вошли как %s\n", account.getLogin());
     }
 
     private static void registration() {
@@ -80,9 +78,59 @@ class Main {
         String patronymic = scanner.next();
         System.out.println("Укажите дату рождения (ДД.ММ.ГГГГ):");
         String date = scanner.next();
-        LocalDate birthDate = LocalDate.parse(date);
-        uniBase.getUniversity().getPersonList()
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate birthDate = LocalDate.parse(date, formatter);
+        Person currentPerson;
+        Person[] foundPeople = uniBase.getUniversity()
+                .getPersonList(false)
+                .stream()
+                .filter(person -> {
+                    return person.getName().equals(name)
+                            && person.getSurname().equals(surname)
+                            && person.getPatronymic().equals(patronymic)
+                            && person.getBirthDate().isEqual(birthDate);
+                }).toArray(Person[]::new);
+        switch (foundPeople.length) {
+            case 0:
+                System.out.println("Человек с такими данными не найден. " +
+                        "Проверьте правильность введенных данных и повторите попытку.");
+                mainMenu();
+                return;
+            case 1:
+                Person person = foundPeople[0];
+                System.out.format("%s %s - это вы?\n", person, person.structDescription);
+                System.out.println("1 - да, 0 - нет");
+                switch (scanner.nextInt()) {
+                    case 1:
+                        currentPerson = person;
+                        break;
+                    default:
+                        System.out.println("Вы прервали регистрацию");
+                        mainMenu();
+                        return;
+                }
+                break;
+            default:
+                System.out.println("Нашлось несколько человек с такими данными. " +
+                        "Укажите номер, стоящий напротив ваших данных");
+                for (int i = 0; i < foundPeople.length; i++) {
+                    System.out.format("%d) %s %s\n", i, foundPeople[i], foundPeople[i].structDescription);
+                }
 
+                int num = scanner.nextInt();
+
+                while (num < 0 || num >= foundPeople.length) {
+                    System.out.println("Введено некорректное число. Повторите ввод.");
+                    num = scanner.nextInt();
+                }
+                currentPerson = foundPeople[num];
+                break;
+        }
+        scanner.reset();
+        System.out.println("Введите логин:");
+        String login = scanner.next();
+        System.out.println("Введите пароль:");
+        //String onePassword =
     }
 
 }

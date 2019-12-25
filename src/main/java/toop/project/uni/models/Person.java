@@ -9,7 +9,7 @@ public class Person {
     private String surname;
     private String patronymic;
     private LocalDate birthDate;
-    String structDescription;
+    public String structDescription;
     private IndexingDelegate delegate;
 
     public Person(String name, String surname, String patronymic, LocalDate birthDate, IndexingDelegate delegate) {
