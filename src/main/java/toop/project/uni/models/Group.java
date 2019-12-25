@@ -1,9 +1,10 @@
 package toop.project.uni.models;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Group {
+public class Group implements Serializable {
     private List<Subject> subjects;
     private List<Student> students;
     private Specialty specialty;
@@ -14,6 +15,11 @@ public class Group {
     public Group(int number, int grade) {
         this.grade = grade;
         this.number = number;
+    }
+
+    @Override
+    public String toString() {
+        return getFullNumber();
     }
 
     public String getFullNumber() {

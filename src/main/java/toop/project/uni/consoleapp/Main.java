@@ -2,8 +2,7 @@ package toop.project.uni.consoleapp;
 
 //Точка входа в консольное приложение
 
-import toop.project.uni.models.Account;
-import toop.project.uni.models.Person;
+import toop.project.uni.models.*;
 import toop.project.uni.services.Serializer;
 import toop.project.uni.services.UniBase;
 
@@ -22,10 +21,11 @@ class Main {
         do {
             System.out.format("Добро пожаловать в Университет %s!\n", uniBase.getUniversity().toString());
         } while (mainMenu());
+        serializer.serializeData(uniBase);
     }
 
     private static void prepare() {
-        serializer = new Serializer("unibase.bin", "ПолитехЪ");
+        serializer = new Serializer("/unibase.dat", "ПолитехЪ");
         uniBase = serializer.getBase();
         scanner = new Scanner(System.in);
     }
@@ -176,14 +176,140 @@ class Main {
     }
 
     private static void studentMode() {
-
+        System.out.println("1 - Просмотреть оценки за семестр ");
+        System.out.println("2 - Просмотреть оценки за весь период обучения");
+        System.out.println("3 - Добавить публикацию");
     }
 
     private static void professorMode() {
-
+        System.out.println("1 - Поставить оценку");
+        System.out.println("2 - Добавить публикацию");
     }
 
     private static void godMode() {
+        System.out.println("1 - Добавить студента");
+        System.out.println("2 - Отчислить студента");
+        System.out.println("3 - Добавить преподавателя");
+        System.out.println("4 - Уволить преподавателя");
+        System.out.println("5 - Уничтожить весь университет");
+        switch (scanner.nextInt()) {
+            case 1:
+
+        }
+    }
+
+    private static void manageGroup(Account account) {
+        int i = 0;
+        System.out.println("Укажите институт:");
+        for (Institute institute : uniBase.getUniversity().getInstituteList()) {
+            System.out.format("%d) %s\n", i, institute);
+            i++;
+        }
+        System.out.format("%d) Добавить новый институт\n", i);
+        int num = scanner.nextInt();
+        Institute institute;
+        if (num == i) {
+            System.out.println("Введите название института:");
+            String name = scanner.next();
+            System.out.println("Введите код института:");
+            int code = scanner.nextInt();
+            institute = new Institute(name, code);
+            uniBase.getUniversity().getInstituteList().add(institute);
+            System.out.println("Институт добавлен");
+        } else if (num >= 0 && num < i) {
+            institute = uniBase.getUniversity().getInstituteList().get(num);
+        } else {
+            System.out.println("Произошла ошибка");
+            return;
+        }
+
+        i = 0;
+        System.out.println("Укажите кафедру:");
+        for (Department department : institute.getDepartmentList()) {
+            System.out.format("%d) %s\n", i, department);
+            i++;
+        }
+        System.out.format("%d) Добавить новую кафедру\n", i);
+        num = scanner.nextInt();
+        Department department;
+        if (num == i) {
+            System.out.println("Введите название кафедры:");
+            String name = scanner.next();
+            System.out.println("Введите код кафедры:");
+            int code = scanner.nextInt();
+            department = new Department(code, name);
+            institute.getDepartmentList().add(department);
+            System.out.println("Кафедра добавлена");
+        } else if (num >= 0 && num < i) {
+            department = institute.getDepartmentList().get(num);
+        } else {
+            System.out.println("Произошла ошибка");
+            return;
+        }
+
+        i = 0;
+        System.out.println("Укажите Направление:");
+        for (Specialty specialty : department.getSpecialtyList()) {
+            System.out.format("%d) %s\n", i, specialty);
+            i++;
+        }
+        System.out.format("%d) Добавить новое направление\n", i);
+        num = scanner.nextInt();
+        Specialty specialty;
+        if (num == i) {
+            System.out.println("Введите название направления:");
+            String name = scanner.next();
+            System.out.println("Введите код направления:");
+            int code = scanner.nextInt();
+            System.out.println("Степень: 0 - бакалавриат, 1 - магистратура, 2 - аспирантура " +
+                    "(берем остаток от введенного Вами числа :) )");
+            Degree degree;
+            switch (scanner.nextInt() % 3) {
+                case 0:
+                    degree = Degree.Bachelor;
+                    break;
+                case 1:
+                    degree = Degree.Master;
+                    break;
+                default:
+                    degree = Degree.Postgraduate;
+                    break;
+            }
+            specialty = new Specialty(code, name, degree);
+            department.getSpecialtyList().add(specialty);
+            System.out.println("Направление добавлено");
+        } else if (num >= 0 && num < i) {
+            specialty = department.getSpecialtyList().get(num);
+        } else {
+            System.out.println("Произошла ошибка");
+            return;
+        }
+
+        i = 0;
+        System.out.println("Укажите группу:");
+        for (Group group : specialty.getGroupList()) {
+            System.out.format("%d) %s\n", i, group);
+            i++;
+        }
+        System.out.format("%d) Добавить новую группу\n", i);
+        num = scanner.nextInt();
+        Group group;
+        if (num == i) {
+            System.out.println("Введите номер группы:");
+            int number = scanner.nextInt();
+            System.out.println("Укажите курс обучения");
+            int course = scanner.nextInt();
+            group = new Group(number, course);
+            specialty.getGroupList().add(group);
+            System.out.println("Группа добавлена");
+        } else if (num >= 0 && num < i) {
+            group = specialty.getGroupList().get(num);
+        } else {
+            System.out.println("Произошла ошибка");
+            return;
+        }
+
+        System.out.format("Вы находитесь в: %s, %s, %s, %s\n",institute, department, specialty, group);
 
     }
 }

@@ -1,6 +1,8 @@
 package toop.project.uni.models;
 
-public enum Degree {
+import java.io.Serializable;
+
+public enum Degree implements Serializable {
     Bachelor,
     Master,
     Postgraduate

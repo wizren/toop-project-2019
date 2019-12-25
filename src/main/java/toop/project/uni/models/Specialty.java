@@ -1,10 +1,11 @@
 package toop.project.uni.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Specialty extends UniStructure {
+public class Specialty extends UniStructure implements Serializable {
     private List<Group> groupList;
     private List<Person> personList;
     private Degree degree;

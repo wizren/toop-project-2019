@@ -1,11 +1,12 @@
 package toop.project.uni.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Institute extends UniStructure {
+public class Institute extends UniStructure implements Serializable {
     private List<Department> departmentList;
     private List<Person> personList;
 

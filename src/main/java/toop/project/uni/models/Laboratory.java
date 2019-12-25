@@ -1,10 +1,11 @@
 package toop.project.uni.models;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Laboratory extends UniStructure {
+public class Laboratory extends UniStructure implements Serializable {
     private List<Professor> professorList;
 
     public Laboratory(String name, int code) {

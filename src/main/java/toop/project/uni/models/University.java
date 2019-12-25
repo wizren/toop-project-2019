@@ -1,10 +1,11 @@
 package toop.project.uni.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class University extends UniStructure implements IndexingDelegate {
+public class University extends UniStructure implements IndexingDelegate, Serializable {
     private List<Institute> instituteList;
     private List<Person> personList;
 

@@ -1,6 +1,8 @@
 package toop.project.uni.models;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
     private String login;
     private int passwordHash;
     private AccountType accountType;

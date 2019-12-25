@@ -1,6 +1,8 @@
 package toop.project.uni.models;
 
-public enum AccountType {
+import java.io.Serializable;
+
+public enum AccountType implements Serializable {
     Error,
     Student,
     Professor,

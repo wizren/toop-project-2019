@@ -2,9 +2,10 @@ package toop.project.uni.models;
 
 //Базовый класс для людей
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Person {
+public class Person implements Serializable {
     private String name;
     private String surname;
     private String patronymic;

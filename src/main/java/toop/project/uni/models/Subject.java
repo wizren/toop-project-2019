@@ -1,6 +1,8 @@
 package toop.project.uni.models;
 
-public class Subject {
+import java.io.Serializable;
+
+public class Subject implements Serializable {
     String name;
 
     public Subject(String name) {

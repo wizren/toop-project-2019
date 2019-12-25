@@ -1,10 +1,11 @@
 package toop.project.uni.models;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class GradeBook {
+public class GradeBook implements Serializable {
     private Map<Integer,Map<Subject, Mark>> book;
     public GradeBook() {
         book = new TreeMap<>();

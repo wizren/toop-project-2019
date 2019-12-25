@@ -1,10 +1,11 @@
 package toop.project.uni.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Professor extends Person {
+public class Professor extends Person implements Serializable {
     List<Subject> subjects;
     List<Publication> scientificPublications;
     int role;

@@ -2,10 +2,11 @@ package toop.project.uni.services;
 
 import toop.project.uni.models.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Authentication {
+public class Authentication implements Serializable {
     private List<Account> accounts;
 
     public Authentication() {

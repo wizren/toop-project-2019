@@ -2,7 +2,9 @@ package toop.project.uni.services;
 
 import toop.project.uni.models.University;
 
-public class UniBase {
+import java.io.Serializable;
+
+public class UniBase implements Serializable {
     private University university;
     private Authentication authentication;
 
